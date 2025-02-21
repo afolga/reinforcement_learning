@@ -1,0 +1,28 @@
+- actor critic methods are sensitive to perturations 
+- limits update to policy network
+- base the update on the ratio of new policy to old 
+- have to account for goodness of state (advantage)
+- clip loss function and take lower bound with min 
+- keeps track of a fixed length trajectory of memories 
+- uses multiple network updates per data sample: mini batch stochastic gradient ascent 
+- keep track of memory indices =[0, 1,2,,,,,19]
+- batches start at multiples of batch_size=0,5,10,15
+- shuffle memories then take batch size chunks 
+- 2 distinct networks for actors and critics 
+- critic evaluates states (not s,a pairs)
+- actor decides what to do in current state 
+ -- network output probs (softmax) for a distribution
+ -- exploration to due to nature of distribution
+- memory fixed to length T (20 steps)
+- track states, actions, rewards, dones, values , log probs
+- shuffle memories and sample batches (5)
+- perform 4 epochs of updates on each batch
+- update rule for actor is complex
+- also takes into account the advantage A(t)
+- return = advantage + critic value (from memory)
+- loss= MSE
+- just doing GPU
+- class for replay buffers --> lists 
+- class for actor network, class for critic network
+- class for agent (ties everything together)
+- main loop to train and evaluate
